@@ -25,3 +25,4 @@ Calculator functionality is implemented in the script.js file.
 ## Contributions
 Contributions are welcome! If you have ideas for improvements or bug fixes, feel free to open an issue or submit a pull request.
 
+Live Demo : https://akismkn.github.io/Calculator-Project/
