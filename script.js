@@ -30,6 +30,10 @@ function operate(number1, operator, number2) {
     number1 = Number(number1);
     number2 = Number(number2);
 
+    // Check for division by zero before performing division
+    if (operator === '÷' && number2 === 0) {
+        return 'Error: Division by zero';
+    }
     // Switch statement to determine the operation to perform
     switch (operator) {
         case '+':
@@ -38,17 +42,17 @@ function operate(number1, operator, number2) {
         case '-':
             result = subtract(number1, number2);
             break;
-        case '×': // Using '×' for multiplication
+        case '×':
             result = multiply(number1, number2);
             break;
-        case '÷': // Using '÷' for division
+        case '÷':
             result = divide(number1, number2);
             break;
     }
-
     // Return the result of the operation
     return result;
 }
+
 
 // Variables to track state and display
 let check = 0;
@@ -61,16 +65,16 @@ numButtons.forEach(function (numButton) {
     numButton.addEventListener('click', function () {
         if (operator !== undefined) {
             // If an operator is present, update number2
-            number2 = Number(number2.toString() + numButton.textContent);
+            number2 = number2 * 10 + Number(numButton.textContent);
             displayText = displayText + numButton.textContent;
         } else {
             // If no operator is present, update number1
-            displayText = '';
-            number1 = Number(number1.toString() + numButton.textContent);
-            displayText = displayText + numButton.textContent;
+            number1 = number1 * 10 + Number(numButton.textContent);
+            displayText = displayText + numButton.textContent; // This line appends the new digit
         }
         display(displayText);
     });
+    
 });
 
 // Event listeners for operator buttons
@@ -95,20 +99,29 @@ opButtons.forEach(function (opButton) {
 // Event listener for the equals button
 let equal = document.querySelector('.equal');
 equal.addEventListener('click', function () {
-    if (number1 !== undefined && number2 !== undefined) {
+    if (operator !== undefined && number2 !== 0) {
         // If both numbers and an operator are present, perform the operation and display the result
         number1 = operate(number1, operator, number2);
         number2 = 0;
-        display(number1);
+        operator = undefined;
+        displayText = number1.toString(); // Update displayText with the result
+        display(displayText);
+    } else {
+        // Handle the case when the division by zero occurs
+        display('Error');
+        number1 = 0;
+        number2 = 0;
+        operator = undefined;
     }
 });
+
 
 // Event listener for the clear button
 let clear = document.querySelector('.clear');
 clear.addEventListener('click', function () {
     // Clear all variables and reset the display
-    number1 = undefined;
-    number2 = undefined;
+    number1 = 0;
+    number2 = 0;
     operator = undefined;
     displayText = '0';
     display(displayText);
