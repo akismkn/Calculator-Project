@@ -20,8 +20,8 @@ function divide(a, b) {
 }
 
 // Variables to store numbers, operator, and display
-let number1 = 0;
-let number2 = 0;
+let number1 = null;
+let number2 = null;
 let operator;
 
 // Function to perform arithmetic operation based on operator
@@ -73,7 +73,7 @@ numButtons.forEach(function (numButton) {
             if (displayText = '0') {
                 displayText = '';
             }
-            displayText = displayText + numButton.textContent; // This line appends the new digit
+            displayText = displayText + number1; // This line appends the new digit
         }
         display(displayText);
     });
@@ -84,10 +84,17 @@ numButtons.forEach(function (numButton) {
 let opButtons = document.querySelectorAll('.operatorButton');
 opButtons.forEach(function (opButton) {
     opButton.addEventListener('click', function () {
-        if (operator === undefined) {
-            // If no operator is set, update the operator
+        // If no operator is set, update the operator
+        if (operator === undefined || number1 ===null) {
             operator = opButton.textContent;
-            displayText = displayText + operator;
+            // if number1 is empty (start or after AC button) display removes '0'
+            if (number1 === null) {
+                // the operator will only show up if its add or subtract
+                if (operator === '-' || operator === '+')
+                displayText = operator;
+            } else {
+                displayText = displayText + operator;
+            }
         } else {
             // If an operator is set, perform the previous operation and update the operator
             number1 = operate(number1, operator, number2);
@@ -106,7 +113,6 @@ equal.addEventListener('click', function () {
         // If both numbers and an operator are present, perform the operation and display the result
         number1 = operate(number1, operator, number2);
         number2 = null;
-        operator = undefined;
         displayText = number1.toString(); // Update displayText with the result
         display(displayText);
     } else if (number2 === null){
