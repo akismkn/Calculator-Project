@@ -124,7 +124,6 @@ equal.addEventListener('click', function () {
     display(displayText);
 });
 
-
 // Event listener for the clear button
 let clear = document.querySelector('.clear');
 clear.addEventListener('click', function () {
