@@ -70,6 +70,9 @@ numButtons.forEach(function (numButton) {
         } else {
             // If no operator is present, update number1
             number1 = number1 * 10 + Number(numButton.textContent);
+            if (displayText = '0') {
+                displayText = '';
+            }
             displayText = displayText + numButton.textContent; // This line appends the new digit
         }
         display(displayText);
@@ -88,7 +91,7 @@ opButtons.forEach(function (opButton) {
         } else {
             // If an operator is set, perform the previous operation and update the operator
             number1 = operate(number1, operator, number2);
-            number2 = 0;
+            number2 = null;
             operator = opButton.textContent;
             displayText = number1 + operator;
         }
@@ -99,20 +102,20 @@ opButtons.forEach(function (opButton) {
 // Event listener for the equals button
 let equal = document.querySelector('.equal');
 equal.addEventListener('click', function () {
-    if (operator !== undefined && number2 !== 0) {
+    if (operator !== undefined && number2 !== null) {
         // If both numbers and an operator are present, perform the operation and display the result
         number1 = operate(number1, operator, number2);
-        number2 = 0;
+        number2 = null;
         operator = undefined;
         displayText = number1.toString(); // Update displayText with the result
         display(displayText);
-    } else {
-        // Handle the case when the division by zero occurs
-        display('Error');
-        number1 = 0;
-        number2 = 0;
-        operator = undefined;
+    } else if (number2 === null){
+        // Handle the case when the number2 is not given
+        displayText = number1.toString(); // we let the display text as it was.
     }
+    operator = undefined;
+    displayText = number1.toString(); // Update displayText with the result
+    display(displayText);
 });
 
 
@@ -120,8 +123,8 @@ equal.addEventListener('click', function () {
 let clear = document.querySelector('.clear');
 clear.addEventListener('click', function () {
     // Clear all variables and reset the display
-    number1 = 0;
-    number2 = 0;
+    number1 = null;
+    number2 = null;
     operator = undefined;
     displayText = '0';
     display(displayText);
