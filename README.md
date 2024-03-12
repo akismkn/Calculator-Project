@@ -1,4 +1,4 @@
-# Calculator Project
+# Calculator Project / (Bugs not fixed yet)
 
 ## Overview
 This is a simple calculator web application built with HTML, CSS (utilizing Flexbox for layout), and JavaScript. The calculator supports basic arithmetic operations such as addition, subtraction, multiplication, and division.
